@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fransisko Varano Udetaputra Bato Tuga — Electrical Engineer</title>
+<meta name="description" content="Portfolio of Fransisko Varano — Electrical Engineering graduate specializing in power electronics, embedded systems, and industrial automation." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0E2036;
+    --bg-panel: #0A1728;
+    --grid-line: rgba(234,242,250,0.055);
+    --grid-line-strong: rgba(234,242,250,0.12);
+    --ink: #EAF2FA;
+    --muted: #93AAC1;
+    --muted-dim: #5D7387;
+    --accent: #FFB238;
+    --accent-dim: rgba(255,178,56,0.35);
+    --teal: #58D6C4;
+    --rule: rgba(234,242,250,0.14);
+    --max: 880px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  a{ color: var(--teal); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover{ border-bottom-color: var(--teal); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  h1,h2,h3{ font-family: 'Space Grotesk', sans-serif; margin: 0; font-weight: 600; }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(10,23,40,0.86);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 56px;
+  }
+  .nav-id{ font-family:'Space Grotesk'; font-size: 15px; color: var(--ink); }
+  .nav-id span{ color: var(--accent); }
+  .nav-links{ display:flex; gap: 22px; }
+  .nav-links a{ color: var(--muted); font-size: 14px; border-bottom: none; margin-right: 4px; }
+  .nav-links a:hover{ color: var(--ink); }
+
+  /* ---------- HERO / TITLE BLOCK ---------- */
+  header.hero{ padding: 72px 0 40px; }
+  .titleblock{
+    border: 1px solid var(--rule);
+    background: var(--bg-panel);
+    position: relative;
+  }
+  .titleblock::before{
+    content:"";
+    position:absolute; inset: 7px;
+    border: 1px solid var(--grid-line-strong);
+    pointer-events:none;
+  }
+  .tb-main{ padding: 34px 30px 22px; }
+  .tb-eyebrow{
+    font-family:'IBM Plex Mono'; font-size: 12px; color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  h1.name{
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.12;
+    margin-top: 10px;
+    max-width: 11ch;
+  }
+  .role-line{
+    margin-top: 14px; color: var(--muted); font-size: 16px; max-width: 46ch;
+  }
+  .tb-fields{
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule);
+  }
+  .tb-field{
+    padding: 12px 16px; border-right: 1px solid var(--rule);
+  }
+  .tb-field:last-child{ border-right:none; }
+  .tb-field .k{ font-family:'IBM Plex Mono'; font-size:10.5px; color: var(--muted-dim); text-transform: lowercase; }
+  .tb-field .v{ font-size: 13.5px; margin-top: 4px; color: var(--ink); }
+  .tb-field .v a{ color: var(--ink); }
+  .tb-field .v a:hover{ color: var(--teal); }
+
+  @media (max-width: 640px){
+    .tb-fields{ grid-template-columns: 1fr 1fr; }
+    .tb-field:nth-child(2){ border-right:none; }
+  }
+
+  /* ---------- SECTION / NODE HEADINGS ---------- */
+  section{ padding: 46px 0; border-top: 1px dashed var(--rule); }
+  section:first-of-type{ border-top: none; }
+
+  .node-heading{
+    display:flex; align-items:baseline; gap: 12px; margin-bottom: 22px;
+  }
+  .node-dot{
+    width: 9px; height: 9px; border-radius:50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(255,178,56,0.14);
+    flex: none;
+    transform: translateY(-2px);
+  }
+  .node-heading h2{ font-size: 20px; }
+  .node-heading .tag{
+    font-family:'IBM Plex Mono'; font-size: 11px; color: var(--muted-dim);
+    margin-left: auto;
+  }
+
+  p.lead{ color: var(--muted); font-size: 15.5px; max-width: 66ch; }
+
+  /* ---------- COMPETENCY GRID ---------- */
+  .grid-2{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 10px 28px;
+  }
+  @media (max-width: 560px){ .grid-2{ grid-template-columns: 1fr; } }
+  .comp{
+    display:flex; gap:10px; align-items:flex-start;
+    font-size: 14.5px; color: var(--ink); padding: 6px 0;
+  }
+  .comp::before{
+    content:""; width:6px; height:6px; margin-top:8px; flex:none;
+    background: var(--teal); transform: rotate(45deg);
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .role{
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
+  }
+  .role:last-child{ border-bottom:none; }
+  .role-top{
+    display:flex; justify-content:space-between; align-items:baseline; gap: 12px; flex-wrap:wrap;
+  }
+  .role-title{ font-family:'Space Grotesk'; font-size:16.5px; font-weight:600; }
+  .role-date{ font-family:'IBM Plex Mono'; font-size:12px; color: var(--muted-dim); white-space:nowrap; }
+  .role-org{ color: var(--teal); font-size: 13.5px; margin-top: 3px; }
+  .role-desc{ color: var(--muted); font-size: 14px; margin-top: 8px; }
+  ul.role-bullets{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+  ul.role-bullets li{ margin-bottom: 5px; }
+  ul.role-bullets li::marker{ color: var(--accent); }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-category{ margin-bottom: 26px; }
+  .proj-category:last-child{ margin-bottom:0; }
+  .proj-category h3{
+    font-size: 13px; text-transform: none; color: var(--accent);
+    font-family: 'IBM Plex Mono'; font-weight: 500; margin-bottom: 10px;
+  }
+  .proj-item{
+    padding: 12px 14px; border: 1px solid var(--rule);
+    background: rgba(234,242,250,0.02);
+    margin-bottom: 8px; font-size: 14px; color: var(--ink);
+  }
+  .proj-item:last-child{ margin-bottom:0; }
+  .proj-item .badge{
+    font-family:'IBM Plex Mono'; font-size: 10.5px; color: var(--teal);
+    display:block; margin-bottom: 5px;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skill-row{ display:flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--rule); flex-wrap:wrap; }
+  .skill-row:last-child{ border-bottom: none; }
+  .skill-label{ font-family:'IBM Plex Mono'; font-size: 11.5px; color: var(--muted-dim); width: 190px; flex: none; padding-top: 2px; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap: 7px; flex:1; }
+  .skill-tag{
+    font-size: 12.5px; padding: 4px 9px; border: 1px solid var(--rule); color: var(--ink);
+    background: rgba(234,242,250,0.03);
+  }
+
+  /* ---------- EDUCATION / MISC ---------- */
+  .edu-row{ display:flex; justify-content:space-between; gap: 14px; flex-wrap:wrap; }
+  .edu-title{ font-family:'Space Grotesk'; font-weight:600; font-size:16px; }
+  .edu-sub{ color: var(--muted); font-size:13.5px; margin-top:4px; }
+  .edu-date{ font-family:'IBM Plex Mono'; font-size:12px; color: var(--muted-dim); }
+
+  .misc-list{ list-style:none; padding:0; margin: 4px 0 0; }
+  .misc-list li{ font-size: 14px; color: var(--muted); padding: 5px 0; border-bottom: 1px dotted var(--rule); }
+  .misc-list li:last-child{ border-bottom:none; }
+  .misc-list li strong{ color: var(--ink); font-weight:500; }
+
+  /* ---------- HERO DECORATION ---------- */
+  .titleblock{ overflow:hidden; }
+  .tb-deco{
+    position:absolute; right: -30px; top: -30px; width: 300px; height: 300px;
+    opacity: 0.55; pointer-events:none;
+  }
+  .tb-deco circle, .tb-deco line, .tb-deco rect{ stroke: var(--grid-line-strong); }
+  .tb-deco .pulse{ stroke: var(--accent-dim); }
+  .corner-node{
+    position:absolute; width:8px; height:8px; border-radius:50%;
+    background: var(--accent); top: 9px; right: 9px;
+  }
+  .corner-node::after{
+    content:""; position:absolute; inset:-6px; border-radius:50%;
+    border:1px solid var(--accent-dim);
+    animation: ping 2.6s ease-out infinite;
+  }
+  @keyframes ping{
+    0%{ transform:scale(0.6); opacity:0.9; }
+    80%{ transform:scale(2.2); opacity:0; }
+    100%{ opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .corner-node::after{ animation:none; } }
+
+  /* ---------- EVIDENCE GALLERY ---------- */
+  .evidence-group{ margin-bottom: 30px; }
+  .evidence-group:last-child{ margin-bottom:0; }
+  .evidence-group h3{
+    font-size: 13px; color: var(--accent); font-family:'IBM Plex Mono';
+    font-weight:500; margin-bottom: 12px;
+  }
+  .evidence-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  @media (max-width: 640px){ .evidence-grid{ grid-template-columns: repeat(2, 1fr); } }
+
+  .evidence-card{
+    display:block; border: 1px solid var(--rule); background: rgba(234,242,250,0.02);
+    overflow:hidden;
+  }
+  .evidence-thumb-wrap{
+    position:relative; width:100%; aspect-ratio: 4/3; background: var(--bg-panel);
+    display:flex; align-items:center; justify-content:center;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .evidence-thumb-wrap img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit: cover;
+    display:block;
+  }
+  .evidence-placeholder{
+    text-align:center; padding: 10px; color: var(--muted-dim);
+  }
+  .evidence-placeholder .plus{
+    font-size: 20px; color: var(--muted-dim); display:block; margin-bottom:6px;
+  }
+  .evidence-placeholder .fname{
+    font-family:'IBM Plex Mono'; font-size: 10px; word-break: break-all; display:block;
+  }
+  .evidence-card img.loaded ~ .evidence-placeholder{ display:none; }
+  .evidence-cap{ padding: 9px 10px; font-size: 12.5px; color: var(--muted); }
+  .evidence-card:hover{ border-color: var(--accent-dim); }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding: 50px 0 70px; border-top: 1px dashed var(--rule); }
+  .contact-box{
+    border: 1px solid var(--rule); padding: 28px; background: var(--bg-panel);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;
+  }
+  .contact-box h2{ font-size: 19px; }
+  .contact-box p{ color: var(--muted); margin: 6px 0 0; font-size: 14px; }
+  .contact-links{ display:flex; gap: 18px; flex-wrap:wrap; }
+  .contact-links a{ margin-right: 6px; }
+  .contact-links a{ font-size: 14px; color: var(--ink); border-bottom: 1px solid var(--rule); }
+  .contact-links a:hover{ color: var(--accent); border-bottom-color: var(--accent); }
+  .fine-print{ text-align:center; color: var(--muted-dim); font-size: 12px; margin-top: 30px; font-family:'IBM Plex Mono'; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-id">FVUBT<span>.</span>EE</div>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="titleblock">
+      <div class="corner-node" aria-hidden="true"></div>
+      <svg class="tb-deco" viewBox="0 0 300 300" fill="none" aria-hidden="true">
+        <circle cx="230" cy="70" r="46" stroke-width="1"/>
+        <circle cx="230" cy="70" r="4" fill="var(--grid-line-strong)"/>
+        <line x1="230" y1="24" x2="230" y2="0" stroke-width="1"/>
+        <line x1="230" y1="116" x2="230" y2="160" stroke-width="1" class="pulse"/>
+        <line x1="184" y1="70" x2="140" y2="70" stroke-width="1"/>
+        <line x1="276" y1="70" x2="300" y2="70" stroke-width="1"/>
+        <rect x="120" y="150" width="34" height="20" stroke-width="1"/>
+        <line x1="137" y1="150" x2="137" y2="120" stroke-width="1"/>
+      </svg>
+      <div class="tb-main">
+        <div class="tb-eyebrow">ELECTRICAL ENGINEERING — POWER &amp; CONTROL SYSTEMS</div>
+        <h1 class="name">Fransisko Varano<br>Udetaputra Bato Tuga</h1>
+        <p class="role-line">Electrical Engineering graduate specializing in power electronics, embedded systems, and industrial automation — from converter design to PLC/SCADA-based control.</p>
+      </div>
+      <div class="tb-fields">
+        <div class="tb-field"><div class="k">location</div><div class="v">Semarang, Indonesia</div></div>
+        <div class="tb-field"><div class="k">email</div><div class="v"><a href="mailto:varanotuga@gmail.com">varanotuga@gmail.com</a></div></div>
+        <div class="tb-field"><div class="k">phone</div><div class="v">+62 812-3916-2683</div></div>
+        <div class="tb-field"><div class="k">linkedin</div><div class="v"><a href="https://www.linkedin.com/in/varano-tuga-772a3a2aa/" target="_blank" rel="noopener">/varano-tuga</a></div></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="summary">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Summary</h2>
+    </div>
+    <p class="lead">
+      Electrical Engineering graduate with a GPA of 3.59/4.00 and hands-on experience in power electronics, embedded systems, PCB design, sensor integration, and industrial automation. Experienced developing and validating electronic systems using STM32, ESP32, Arduino, and Haiwell/Omron PLCs, with a strong specialization in power electronics and control systems.
+    </p>
+    <div class="grid-2" style="margin-top:22px;">
+      <div class="comp">Power Electronics &amp; Converter Design</div>
+      <div class="comp">SCADA &amp; HMI Development</div>
+      <div class="comp">Embedded Systems (STM32, ESP32, Arduino)</div>
+      <div class="comp">IoT &amp; Monitoring Systems (MQTT/HiveMQ)</div>
+      <div class="comp">PCB &amp; Schematic Design (TARGET 3001!)</div>
+      <div class="comp">Sensor Integration &amp; Calibration</div>
+      <div class="comp">Circuit Simulation (PSIM, Proteus 8)</div>
+      <div class="comp">Electronics Circuit Troubleshooting</div>
+      <div class="comp">PLC Programming (Haiwell, Omron)</div>
+      <div class="comp">Technical Documentation &amp; Reporting</div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="role">
+      <div class="role-top">
+        <div class="role-title">Part-Time Teacher, Basic Electronics</div>
+        <div class="role-date">Jun 2025–Nov 2025 · Jan 2026–Jul 2026</div>
+      </div>
+      <div class="role-org">SMA Kristen Tritunggal — Semarang</div>
+      <div class="role-desc">Delivered Basic Electronics instruction to senior high school students across three grade levels.</div>
+      <ul class="role-bullets"><li>Taught Basic Electronics curriculum to Grades 10, 11, and 12.</li></ul>
+    </div>
+
+    <div class="role">
+      <div class="role-top">
+        <div class="role-title">Internship, Operation Facility Division</div>
+        <div class="role-date">Feb 2025–Mar 2025</div>
+      </div>
+      <div class="role-org">PT PLN (Persero) UP2B DKI Jakarta dan Banten — Jakarta Timur</div>
+      <div class="role-desc">Gained direct exposure to national power grid facility operations at a regional load dispatch center.</div>
+      <ul class="role-bullets"><li>Participated as an intern within the Operation Facility Division.</li></ul>
+    </div>
+
+    <div class="role">
+      <div class="role-top">
+        <div class="role-title">Teaching Assistant</div>
+        <div class="role-date">2022–2026</div>
+      </div>
+      <div class="role-org">UNIKA Soegijapranata — Semarang</div>
+      <div class="role-desc">Supported practicum instruction across four core electrical engineering laboratory courses.</div>
+      <ul class="role-bullets">
+        <li>Mikroprosesor dan Mikrokontroler (Practicum)</li>
+        <li>Pengukuran &amp; Rangkaian Listrik (Practicum)</li>
+        <li>Dasar Teknik Elektro (Practicum) — 2 terms</li>
+        <li>Dasar Telekomunikasi (Practicum)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Selected Projects</h2>
+    </div>
+
+    <div class="proj-category">
+      <h3>power_electronics_&amp;_research</h3>
+      <div class="proj-item"><span class="badge">FORTEI-ICEE 2026 · IEEE Conference, Makassar</span>Designed a three-leg interleaved buck converter for synchronous generator excitation systems; paper accepted at FORTEI-ICEE 2026.</div>
+      <div class="proj-item"><span class="badge">STM32F4 · PSIM</span>Built a multi-cell H-bridge inverter using an STM32F4 microcontroller, with switching logic derived from a PSIM-simulated lookup table.</div>
+    </div>
+
+    <div class="proj-category">
+      <h3>industrial_automation_&amp;_control</h3>
+      <div class="proj-item"><span class="badge">Omron PLC</span>Created a PLC learning module consisting of a pneumatic system module and a forward-reverse 3-phase motor control module, equipped with push buttons and an emergency stop button.</div>
+      <div class="proj-item"><span class="badge">SCADA · Modbus</span>Created a SCADA learning module consisting of a sensor module (Rennata power meter via Modbus communication) and an actuator module (pilot lamps and a Schneider VSD), equipped with push buttons and a system-wide emergency stop button.</div>
+      <div class="proj-item"><span class="badge">SISPRO</span>Contributed to work instructions for the Inspection and Maintenance Procedure System of the Measurement Train.</div>
+    </div>
+
+    <div class="proj-category">
+      <h3>iot_&amp;_monitoring_systems</h3>
+      <div class="proj-item"><span class="badge">IoT Control</span>Developed an Automatic Solar Panel (PV) Cleaning System with an IoT-based control system.</div>
+      <div class="proj-item"><span class="badge">Real-time Dashboard</span>Developed an IoT-based structural tilt monitoring system with real-time data logging and a live dashboard.</div>
+    </div>
+
+    <div class="proj-category">
+      <h3>software_automation</h3>
+      <div class="proj-item"><span class="badge">n8n · AI Extraction</span>Built an automated receipt-processing Telegram bot using n8n and AI-based data extraction.</div>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Evidence</h2>
+      <span class="tag">proof of work</span>
+    </div>
+    <p class="lead" style="margin-bottom:24px;">
+      Photo documentation, certificates, and publication records supporting the projects and achievements listed above.
+    </p>
+
+    <div class="evidence-group">
+      <h3>hardware_projects</h3>
+      <div class="evidence-grid">
+        <a class="evidence-card" href="assets/proj-buck-converter.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-buck-converter.jpeg" alt="Three-leg interleaved buck converter prototype" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-buck-converter.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">Interleaved buck converter prototype</div>
+        </a>
+        <a class="evidence-card" href="assets/proj-hbridge-inverter.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-hbridge-inverter.jpeg" alt="Multi-cell H-bridge inverter" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-hbridge-inverter.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">Multi-cell H-bridge inverter</div>
+        </a>
+        <a class="evidence-card" href="assets/proj-plc-omron.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-plc-omron.jpeg" alt="Omron PLC learning module" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-plc-omron.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">PLC learning module (Omron)</div>
+        </a>
+        <a class="evidence-card" href="assets/proj-scada-module.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-scada-module.jpeg" alt="SCADA learning module" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-scada-module.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">SCADA learning module</div>
+        </a>
+        <a class="evidence-card" href="assets/proj-pv-cleaning.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-pv-cleaning.jpeg" alt="Automatic solar panel cleaning system" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-pv-cleaning.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">Automatic PV cleaning system</div>
+        </a>
+        <a class="evidence-card" href="assets/proj-tilt-monitoring.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/proj-tilt-monitoring.jpeg" alt="IoT structural tilt monitoring dashboard" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/proj-tilt-monitoring.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">IoT tilt monitoring dashboard</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="evidence-group">
+      <h3>certificates_&amp;_awards</h3>
+      <div class="evidence-grid">
+        <a class="evidence-card" href="assets/cert-toefl.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/cert-toefl.jpeg" alt="TOEFL certificate" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/cert-toefl.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">TOEFL — Score 533</div>
+        </a>
+        <a class="evidence-card" href="assets/cert-krti-2023.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/cert-krti-2023.jpeg" alt="KRTI 2023 certificate" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/cert-krti-2023.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">KRTI 2023 — Regional</div>
+        </a>
+        <a class="evidence-card" href="assets/cert-pnbrc-2026.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/cert-pnbrc-2026.jpeg" alt="PNBRC 2026 certificate" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/cert-pnbrc-2026.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">PNBRC 2026 — National</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="evidence-group">
+      <h3>publications</h3>
+      <div class="evidence-grid">
+        <a class="evidence-card" href="assets/paper-fortei-icee-2026.jpeg" target="_blank" rel="noopener">
+          <div class="evidence-thumb-wrap">
+            <img src="assets/paper-fortei-icee-2026.jpeg" alt="FORTEI-ICEE 2026 paper acceptance" onload="this.classList.add('loaded')" onerror="this.remove()">
+            <div class="evidence-placeholder"><span class="plus">+</span><span class="fname">assets/paper-fortei-icee-2026.jpeg</span></div>
+          </div>
+          <div class="evidence-cap">FORTEI-ICEE 2026 — Accepted paper</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Skills</h2>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-label">power &amp; embedded</div>
+      <div class="skill-tags">
+        <span class="skill-tag">DC-DC Converters</span><span class="skill-tag">AC-AC Choppers</span>
+        <span class="skill-tag">SCR Excitation</span><span class="skill-tag">STM32F407V</span>
+        <span class="skill-tag">Arduino</span><span class="skill-tag">ESP32</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">design &amp; simulation</div>
+      <div class="skill-tags">
+        <span class="skill-tag">TARGET 3001!</span><span class="skill-tag">PSIM</span>
+        <span class="skill-tag">Proteus 8 Professional</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">automation &amp; control</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Haiwell Happy PLC</span><span class="skill-tag">Haiwell Cloud SCADA Designer</span>
+        <span class="skill-tag">Omron CX-Programmer</span><span class="skill-tag">Omron CX-Designer</span>
+        <span class="skill-tag">VSD</span><span class="skill-tag">PI/PID Control</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">iot &amp; monitoring</div>
+      <div class="skill-tags">
+        <span class="skill-tag">MQTT / HiveMQ</span><span class="skill-tag">Raspberry Pi</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">C/C++</span><span class="skill-tag">Python</span><span class="skill-tag">HTML/CSS/JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-label">other</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Sensor Integration &amp; Calibration</span>
+        <span class="skill-tag">Circuit Troubleshooting</span><span class="skill-tag">n8n Workflow Automation</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="node-heading">
+      <div class="node-dot"></div>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-row">
+      <div>
+        <div class="edu-title">Bachelor of Electrical Engineering (S1)</div>
+        <div class="edu-sub">UNIKA Soegijapranata — Semarang · GPA 3.59/4.00</div>
+      </div>
+      <div class="edu-date">2022–2026</div>
+    </div>
+
+    <ul class="misc-list" style="margin-top:26px;">
+      <li><strong>TOEFL</strong> — Score 533 (May 2026)</li>
+      <li><strong>KRTI 2023</strong> — Regional Participant, Kontes Robot Tematik Indonesia</li>
+      <li><strong>PNBRC 2026</strong> — National Participant, Politeknik Negeri Bali Robot Competition</li>
+      <li><strong>Committee Member</strong> — PTMB Faculty of Engineering 2024</li>
+      <li><strong>Committee Member</strong> — Malam Keakraban Teknik Elektro 2023</li>
+      <li><strong>Committee Member</strong> — Line Follower Competition, Electrical Engineering Dept. 2025</li>
+    </ul>
+  </section>
+
+  <footer id="contact">
+    <div class="contact-box">
+      <div>
+        <h2>Let's talk</h2>
+        <p>Open to opportunities in power electronics, embedded systems, and industrial automation.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:varanotuga@gmail.com">varanotuga@gmail.com</a>
+        <a href="https://www.linkedin.com/in/varano-tuga-772a3a2aa/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="tel:+6281239162683">+62 812-3916-2683</a>
+      </div>
+    </div>
+    <div class="fine-print">Semarang, Indonesia — updated 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
