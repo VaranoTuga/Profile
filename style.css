@@ -87,7 +87,7 @@ header.hero{ padding: 48px 0 0; }
 h1.name{
   font-size: clamp(28px, 4.6vw, 40px);
   line-height: 1.18;
-  max-width: 16ch;
+  max-width: 20ch;
 }
 .role-line{
   margin-top: 14px; color: var(--ink-soft); font-size: 16px; max-width: 54ch;
