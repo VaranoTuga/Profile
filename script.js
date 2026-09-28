@@ -249,7 +249,7 @@ if (document.readyState === "loading") {
     );
     document
       .querySelectorAll(
-        ".section-heading, .role, .proj-item, .evidence-card, table.bom, .edu-row, .contact-box",
+        ".section-heading, .role, .proj-item, .evidence-card, table.bom, .edu-card, .edu-group, .contact-box",
       )
       .forEach(function (el) {
         el.classList.add("reveal");
