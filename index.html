@@ -2,6 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      try {
+        var t =
+          localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+        document.documentElement.dataset.theme = t;
+      } catch (e) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0f0d" />
     <title>Fransisko Varano Udetaputra Bato Tuga — Electrical Engineer</title>
@@ -20,68 +32,30 @@
   <body>
     <nav>
       <div class="wrap">
-        <div class="nav-id">FVUBT-EE</div>
+        <div class="nav-id">PORTOFOLIO</div>
         <div class="nav-links">
+          <a href="#home">Home</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
-          <a href="#evidence">Evidence</a>
-          <a href="#skills">Skills</a>
           <a href="#education">Education</a>
+          <a href="#evidence">Certificates</a>
+          <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
         </div>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="themeToggle"
+          aria-label="Toggle light/dark theme"
+        >
+          Theme
+        </button>
       </div>
     </nav>
 
     <div class="wrap">
-      <header class="hero">
+      <header class="hero" id="home">
         <div class="titleblock">
-          <svg
-            class="circuit-bg"
-            viewBox="0 0 900 260"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <g
-              fill="none"
-              stroke="#2c4137"
-              stroke-width="1.4"
-              stroke-linecap="round"
-            >
-              <path d="M0 40 H140 V90 H320" />
-              <path d="M0 210 H90 V170 H260 V120 H420" />
-              <path d="M900 30 H760 V70 H600" />
-              <path d="M900 150 H820 V190 H700 V230 H540" />
-              <path d="M480 0 V50 H560 V0" />
-              <path d="M420 260 V210 H500 V260" />
-            </g>
-            <g
-              fill="none"
-              stroke="#33e8a0"
-              stroke-width="1.4"
-              stroke-linecap="round"
-              opacity="0.85"
-            >
-              <path class="flow" d="M0 40 H140 V90 H320" />
-              <path class="flow" d="M900 150 H820 V190 H700 V230 H540" />
-            </g>
-            <g fill="#e0a35c">
-              <circle cx="140" cy="40" r="3" />
-              <circle cx="320" cy="90" r="3" />
-              <circle cx="90" cy="210" r="3" />
-              <circle cx="420" cy="120" r="3" />
-              <circle cx="760" cy="30" r="3" />
-              <circle cx="600" cy="70" r="3" />
-              <circle cx="820" cy="150" r="3" />
-              <circle cx="540" cy="230" r="3" />
-            </g>
-            <g fill="none" stroke="#2c4137" stroke-width="1.4">
-              <rect x="300" y="80" width="24" height="12" />
-              <rect x="580" y="60" width="24" height="12" />
-            </g>
-          </svg>
-          <span class="reg-mark reg-tl" aria-hidden="true"></span>
-          <span class="reg-mark reg-tr" aria-hidden="true"></span>
           <div class="tb-main">
             <h1 class="name">Fransisko Varano Udetaputra Bato Tuga</h1>
             <p class="role-line">
@@ -92,6 +66,25 @@
             <div class="status-badge">
               <span class="status-dot" aria-hidden="true"></span>Available for
               opportunities
+            </div>
+            <div class="hero-cta">
+              <a class="btn primary" href="#projects">Explore projects</a>
+              <a class="btn" href="CV.docx" download
+                >Download CV</a
+              >
+              <a class="btn" href="#contact">Contact</a>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <b data-count="3.59" data-dec="2">3.59</b
+                ><span>GPA / 4.00</span>
+              </div>
+              <div>
+                <b data-count="7">7</b><span>Lab courses assisted</span>
+              </div>
+              <div>
+                <b data-count="1">1</b><span>IEEE conference paper</span>
+              </div>
             </div>
           </div>
           <div class="tb-fields">
@@ -145,18 +138,6 @@
           PLCs, with over two years of teaching-assistant experience across
           seven laboratory courses.
         </p>
-        <div class="grid-2">
-          <div class="comp">Power electronics &amp; converter design</div>
-          <div class="comp">SCADA &amp; HMI development</div>
-          <div class="comp">Embedded systems (STM32, ESP32, Arduino)</div>
-          <div class="comp">IoT &amp; monitoring systems (MQTT/HiveMQ)</div>
-          <div class="comp">PCB &amp; schematic design (TARGET 3001!)</div>
-          <div class="comp">Sensor integration &amp; calibration</div>
-          <div class="comp">Circuit simulation (PSIM, Proteus 8)</div>
-          <div class="comp">Electronics circuit troubleshooting</div>
-          <div class="comp">PLC programming (Haiwell, Omron)</div>
-          <div class="comp">Technical documentation &amp; reporting</div>
-        </div>
       </section>
 
       <section id="experience">
@@ -546,19 +527,123 @@
         </div>
       </section>
 
-      <section id="evidence">
+      <section id="education">
         <div class="section-heading">
-          <h2>Evidence</h2>
+          <h2>Education</h2>
           <span class="sheet-tag">SHT 04/07</span>
         </div>
+        <div class="edu-row">
+          <div>
+            <div class="edu-title">Bachelor of Electrical Engineering (S1)</div>
+            <div class="edu-sub">
+              UNIKA Soegijapranata — Semarang · GPA 3.59/4.00
+            </div>
+          </div>
+          <div class="edu-date">2022–2026</div>
+        </div>
+        <p class="lead" style="margin-top: 14px">
+          Final Project:
+          <em
+            >"A Three-Leg Interleaved Buck Converter Topology for Enhanced
+            Current Quality in Synchronous Generator Excitation
+            Applications"</em
+          >
+        </p>
+
+        <ul class="misc-list">
+          <li><strong>TOEFL</strong> — Score 533 (May 2026)</li>
+        </ul>
+        <div class="misc-group">
+          <h3>Organizations</h3>
+          <ul class="misc-list">
+            <li>
+              <strong>Member</strong> — Keluarga Mahasiswa Teknik Elektro Energi
+              (KMTEE)
+            </li>
+            <li><strong>Member</strong> — Komunitas Musik Teknik (Komustik)</li>
+          </ul>
+        </div>
+        <div class="misc-group">
+          <h3>Committees</h3>
+          <ul class="misc-list">
+            <li>
+              <strong>Committee Member</strong> — Malam Keakraban Teknik Elektro
+              2023
+              <span class="misc-desc"
+                >Event division. Conceptualized and designed the complete event
+                rundown together with the team.</span
+              >
+            </li>
+            <li>
+              <strong>Committee Member</strong> — PTMB Faculty of Engineering
+              2024
+              <span class="misc-desc"
+                >Creative division. Produced the PTMB teaser video, created the
+                cheer from scratch (song choice, lyrics, and choreography), and
+                designed the venue decoration.</span
+              >
+            </li>
+            <li>
+              <strong>Committee Chair</strong> — Robovaganza Line Follower
+              Competition 2025, Electrical Engineering Dept.
+              <span class="misc-desc"
+                >Led the committee: defined the event concept, oversaw execution
+                so it stayed true to that concept, and designed the competition
+                track layout.</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="misc-group">
+          <h3>Campus Programs</h3>
+          <ul class="misc-list">
+            <li>
+              <strong>Participant</strong> — Proposal Kreativitas Mahasiswa
+              (PKM) Universitas
+            </li>
+            <li>
+              <strong>Participant</strong> — PPK Ormawa (Program Penguatan
+              Kapasitas Organisasi Kemahasiswaan)
+            </li>
+          </ul>
+        </div>
+        <div class="misc-group">
+          <h3>Competitions</h3>
+          <ul class="misc-list">
+            <li>
+              <strong>KRTMI 2023</strong> — Regional Participant, Thematic
+              Division of Kontes Robot Tematik Indonesia (KRTI)
+              <span class="misc-desc"
+                >Team member, Team SAURO. Contributed to building a 4WD mobile
+                robot with a gripper that picks up objects and carries them from
+                one point to another.</span
+              >
+            </li>
+            <li>
+              <strong>PNBRC 2026</strong> — National Participant, Politeknik
+              Negeri Bali Robot Competition
+              <span class="misc-desc"
+                >Sumo robot category. Upgraded the campus's existing robot by
+                replacing its motors with higher-torque units coupled through a
+                belt drive, and fitting a blade at the front.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="evidence">
+        <div class="section-heading">
+          <h2>Certificates &amp; Awards</h2>
+          <span class="sheet-tag">SHT 05/07</span>
+        </div>
         <p class="lead" style="margin-bottom: 24px">
-          Certificates and awards supporting the achievements listed above.
-          Project photos and the accepted paper open in a lightbox from the
-          "View documentation" links next to each project.
+          Official certificates from conferences, competitions, and training.
+          Click a card to enlarge it.
         </p>
 
         <div class="evidence-group">
-          <h3>Certificates &amp; Awards</h3>
+          <h3>Conference, competitions &amp; training</h3>
           <div class="evidence-grid">
             <div
               class="evidence-card"
@@ -745,7 +830,7 @@
       <section id="skills">
         <div class="section-heading">
           <h2>Skills</h2>
-          <span class="sheet-tag">SHT 05/07</span>
+          <span class="sheet-tag">SHT 06/07</span>
         </div>
 
         <table class="bom">
@@ -757,11 +842,15 @@
           </thead>
           <tbody>
             <tr>
-              <td class="cat">Power &amp; embedded</td>
+              <td class="cat">Power electronics</td>
               <td class="items">
-                DC-DC converters, AC-AC choppers, SCR excitation, STM32F407V,
-                Arduino, ESP32, NodeMCU/ESP8266
+                DC converters (DC-DC), AC converters (AC-AC choppers, SCR
+                excitation), motor control (DC, BLDC, 3-phase induction via VSD)
               </td>
+            </tr>
+            <tr>
+              <td class="cat">Embedded systems</td>
+              <td class="items">STM32F407V, Arduino, ESP32, NodeMCU/ESP8266</td>
             </tr>
             <tr>
               <td class="cat">Design &amp; simulation</td>
@@ -792,58 +881,6 @@
             </tr>
           </tbody>
         </table>
-      </section>
-
-      <section id="education">
-        <div class="section-heading">
-          <h2>Education</h2>
-          <span class="sheet-tag">SHT 06/07</span>
-        </div>
-        <div class="edu-row">
-          <div>
-            <div class="edu-title">Bachelor of Electrical Engineering (S1)</div>
-            <div class="edu-sub">
-              UNIKA Soegijapranata — Semarang · GPA 3.59/4.00
-            </div>
-          </div>
-          <div class="edu-date">2022–2026</div>
-        </div>
-        <p class="lead" style="margin-top: 14px">
-          Final Project:
-          <em
-            >"A Three-Leg Interleaved Buck Converter Topology for Enhanced
-            Current Quality in Synchronous Generator Excitation
-            Applications"</em
-          >
-        </p>
-
-        <ul class="misc-list">
-          <li><strong>TOEFL</strong> — Score 533 (May 2026)</li>
-          <li>
-            <strong>KRTI 2023</strong> — Regional Participant, Kontes Robot
-            Tematik Indonesia
-          </li>
-          <li>
-            <strong>PNBRC 2026</strong> — National Participant, Politeknik
-            Negeri Bali Robot Competition
-          </li>
-          <li>
-            <strong>Committee Member</strong> — PTMB Faculty of Engineering 2024
-          </li>
-          <li>
-            <strong>Committee Member</strong> — Malam Keakraban Teknik Elektro
-            2023
-          </li>
-          <li>
-            <strong>Committee Member</strong> — Line Follower Competition,
-            Electrical Engineering Dept. 2025
-          </li>
-          <li>
-            <strong>Member</strong> — Keluarga Mahasiswa Teknik Elektro Energi
-            (KMTEE), Komunitas Musik Teknik (Komustik), Proposal Kreativitas
-            Mahasiswa (PKM) Universitas, PPK Ormawa
-          </li>
-        </ul>
       </section>
 
       <footer id="contact">
@@ -878,38 +915,47 @@
       id="lightbox"
       onclick="if (event.target === this) closeLightbox();"
     >
-      <button
-        class="lightbox-close"
-        onclick="closeLightbox()"
-        aria-label="Close preview"
+      <div
+        class="lightbox-window"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lightbox-caption"
       >
-        ✕
-      </button>
-      <button
-        class="lightbox-nav lightbox-prev"
-        onclick="navLightbox(-1)"
-        aria-label="Previous image"
-      >
-        ‹
-      </button>
-      <button
-        class="lightbox-nav lightbox-next"
-        onclick="navLightbox(1)"
-        aria-label="Next image"
-      >
-        ›
-      </button>
-      <div class="lightbox-inner">
-        <img id="lightbox-img" src="" alt="" style="display: none" />
-        <div
-          id="lightbox-missing"
-          class="lightbox-missing"
-          style="display: none"
-        >
-          Image not uploaded yet
+        <div class="lightbox-bar">
+          <div class="lightbox-caption" id="lightbox-caption"></div>
+          <div class="lightbox-counter" id="lightbox-counter"></div>
+          <button
+            class="lightbox-close"
+            onclick="closeLightbox()"
+            aria-label="Close preview"
+          >
+            ✕
+          </button>
         </div>
-        <div class="lightbox-caption" id="lightbox-caption"></div>
-        <div class="lightbox-counter" id="lightbox-counter"></div>
+        <div class="lightbox-stage">
+          <button
+            class="lightbox-nav lightbox-prev"
+            onclick="navLightbox(-1)"
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <img id="lightbox-img" src="" alt="" style="display: none" />
+          <div
+            id="lightbox-missing"
+            class="lightbox-missing"
+            style="display: none"
+          >
+            Image not uploaded yet
+          </div>
+          <button
+            class="lightbox-nav lightbox-next"
+            onclick="navLightbox(1)"
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </div>
       </div>
     </div>
 
