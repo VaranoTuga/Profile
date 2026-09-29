@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fransisko Varano Udetaputra Bato Tuga | Electrical Engineer</title>
+<meta name="description" content="Portfolio of Fransisko Varano: Electrical Engineering graduate specializing in power electronics, embedded systems, and industrial automation.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav" id="home">
+  <a class="brand" href="#home" aria-label="Back to top">Varano Tuga</a>
+  <nav aria-label="Sections">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#evidence">Certificates</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="theme-toggle" id="theme" type="button" aria-label="Switch color theme">
+    <span class="tt-dot" aria-hidden="true"></span><span id="theme-label">Dark</span>
+  </button>
+</header>
+
+<main>
+  <section class="hero wrap" aria-labelledby="name">
+    <div class="hero-text">
+      <h1 id="name">Fransisko Varano Udetaputra Bato Tuga</h1>
+      <p class="tagline">Electrical Engineering graduate specializing in power electronics, embedded systems, and industrial automation, from converter design to PLC/SCADA-based control.</p>
+      <p class="badge"><span class="status-dot" aria-hidden="true"></span>Available for opportunities</p>
+      <p class="lead">Electrical Engineering graduate with a GPA of 3.59/4.00 and hands-on experience in power electronics, embedded systems, PCB design, sensor integration, and industrial automation. Author and presenter of an IEEE-affiliated conference paper (FORTEI-ICEE 2026) on interleaved buck converter design. Experienced developing and validating electronic systems using STM32, ESP32, Arduino, and Haiwell/Omron PLCs, with over two years of teaching-assistant experience across seven laboratory courses.</p>
+      <div class="actions">
+        <a class="btn primary" href="#projects">Explore projects</a>
+        <a class="btn" href="CV.docx" download>Download CV</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="board" id="board"></div>
+    <table class="spec">
+      <caption class="sr">Key facts</caption>
+      <tbody>
+        <tr><th scope="row">Discipline</th><td>Electrical Engineering</td></tr>
+        <tr><th scope="row">Location</th><td>Semarang, Indonesia</td></tr>
+        <tr><th scope="row">GPA</th><td>3.59 / 4.00</td></tr>
+        <tr><th scope="row">Teaching</th><td>7 lab courses assisted</td></tr>
+        <tr><th scope="row">Publication</th><td>1 IEEE conference paper</td></tr>
+        <tr><th scope="row">Email</th><td><a href="mailto:varanotuga@gmail.com">varanotuga@gmail.com</a></td></tr>
+        <tr><th scope="row">Phone</th><td><a href="https://wa.me/6281239162683">+62 812-3916-2683</a></td></tr>
+        <tr><th scope="row">LinkedIn</th><td><a href="https://www.linkedin.com/in/varano-tuga-772a3a2aa/" target="_blank" rel="noopener">/varano-tuga</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="wrap" id="experience" aria-labelledby="h-exp">
+    <h2 id="h-exp">Experience</h2>
+    <ol class="timeline" id="exp-list"></ol>
+  </section>
+
+  <section class="wrap" id="projects" aria-labelledby="h-projects">
+    <h2 id="h-projects">Selected projects</h2>
+    <div id="projects-root"></div>
+  </section>
+
+  <section class="wrap" id="education" aria-labelledby="h-edu">
+    <h2 id="h-edu">Education</h2>
+    <article class="edu">
+      <div class="edu-head">
+        <div>
+          <h3>Bachelor of Electrical Engineering (S1)</h3>
+          <p class="org">UNIKA Soegijapranata, Semarang</p>
+        </div>
+        <p class="meta">2022–2026</p>
+      </div>
+      <div class="edu-stats">
+        <div>
+          <p class="big">3.59<small> / 4.00</small></p>
+          <p class="org">GPA</p>
+          <div class="meter" role="img" aria-label="GPA 3.59 out of 4.00"><i style="width:89.75%"></i></div>
+        </div>
+        <div>
+          <p class="big">533</p>
+          <p class="org">TOEFL, May 2026</p>
+        </div>
+      </div>
+      <p class="final"><b>Final project:</b> <em>"A Three-Leg Interleaved Buck Converter Topology for Enhanced Current Quality in Synchronous Generator Excitation Applications"</em></p>
+    </article>
+    <div class="edu-grid" id="edu-grid"></div>
+  </section>
+
+  <section class="wrap" id="evidence" aria-labelledby="h-cert">
+    <h2 id="h-cert">Certificates and awards</h2>
+    <p class="lead">Official certificates from conferences, competitions, and training. Click a card to enlarge it.</p>
+    <div class="certs" id="cert-grid"></div>
+  </section>
+
+  <section class="wrap" id="skills" aria-labelledby="h-skills">
+    <h2 id="h-skills">Skills</h2>
+    <div class="skills" id="skills-grid"></div>
+    <p class="legend"><i class="key"></i> Skill &nbsp;&nbsp; <i class="key t"></i> Tool or detail &nbsp;&nbsp; Click a skill to highlight the related experience and projects.</p>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+  <div class="wrap foot-in">
+    <div>
+      <h2 class="foot-h">Let's talk</h2>
+      <p>Open to opportunities in power electronics, embedded systems, and industrial automation.</p>
+    </div>
+    <ul class="contact">
+      <li><span>Email</span><a href="mailto:varanotuga@gmail.com">varanotuga@gmail.com</a></li>
+      <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/varano-tuga-772a3a2aa/" target="_blank" rel="noopener">linkedin.com/in/varano-tuga</a></li>
+      <li><span>WhatsApp</span><a href="https://wa.me/6281239162683">+62 812-3916-2683</a></li>
+      <li><span>Location</span>Semarang, Indonesia</li>
+    </ul>
+  </div>
+</footer>
+
+<div class="filterbar" id="filterbar" hidden role="status" aria-live="polite">
+  <span id="fb-text"></span>
+  <button type="button" id="fb-next">Next match</button>
+  <button type="button" id="fb-clear">Clear</button>
+</div>
+
+<dialog id="viewer" aria-labelledby="v-title">
+  <div class="win">
+    <header class="win-bar">
+      <h3 id="v-title"></h3>
+      <span class="win-count" id="v-count"></span>
+      <button class="win-close" id="v-close" type="button" aria-label="Close photo viewer">Close</button>
+    </header>
+    <div class="win-stage">
+      <button class="nav-btn" id="v-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+      <div class="win-img" id="v-img"></div>
+      <button class="nav-btn" id="v-next" type="button" aria-label="Next photo">&rsaquo;</button>
+    </div>
+    <div class="win-thumbs" id="v-thumbs"></div>
+  </div>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
