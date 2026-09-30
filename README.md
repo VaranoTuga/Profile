@@ -1,8 +1,5 @@
 # Portofolio: Fransisko Varano Udetaputra Bato Tuga
 
-Website portofolio statis (HTML, CSS, JavaScript murni). Tidak perlu build atau instalasi apa pun.
-Isi (deskripsi, kegiatan, sertifikat, kontak) dan nama file gambar diambil dari situs lamamu, jadi folder `assets/` yang sudah ada bisa dipakai langsung.
-
 ## Struktur
 
 ```
