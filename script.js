@@ -111,3 +111,371 @@ const CERTS = [
   { title:"Certificate of Presentation", meta:"FORTEI-ICEE 2026", id:"ID 015/FORTEI-ICEE/9/2026", caption:"Certificate of Presentation, FORTEI-ICEE 2026 (ID 015/FORTEI-ICEE/9/2026)", images:["assets/cert-fortei-presentation-1.jpeg","assets/cert-fortei-presentation-2.jpeg"] },
   { title:"Data Analyst Bootcamp", meta:"Intermediate | Karirnex, Sep 2026", caption:"Data Analyst Bootcamp (Intermediate), Karirnex by PT Ebiz Karisma Internasional, Sep 2026", images:["assets/cert-bootcamp-data-analyst-1.jpg","assets/cert-bootcamp-data-analyst-2.jpg"] }
 ];
+
+/* =====================================================================
+   Helpers: probe which images really exist, then use only those
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const probe = src => new Promise(res => { const i = new Image(); i.onload = () => res(src); i.onerror = () => res(null); i.src = src; });
+const ph = (paths, big) => `<div class="ph" role="img" aria-label="Photo not added yet"><span>Add photos here</span><code>${esc(paths[0])}</code>${big && paths.length > 1 ? `<small>and ${paths.length - 1} more: -2, -3</small>` : ""}</div>`;
+
+const sets = {};      // key -> { title, caption, images, ok }
+let n = 0;
+function makeSet(title, caption, images) {
+  const key = "s" + (n++);
+  sets[key] = { title, caption, images, ok: [] };
+  return key;
+}
+const coverBtn = (key, extra = "") => `<button class="cover ${extra}" type="button" data-view="${key}" data-cover aria-label="View photos: ${esc(sets[key].title)}">${ph(sets[key].images)}</button>`;
+
+async function hydrate() {
+  await Promise.all(Object.entries(sets).map(async ([key, s]) => {
+    s.ok = (await Promise.all(s.images.map(probe))).filter(Boolean);
+    document.querySelectorAll(`[data-cover][data-view="${key}"]`).forEach(el => {
+      if (s.ok.length) el.innerHTML = `<img src="${esc(s.ok[0])}" alt="${esc(s.title)}" loading="lazy">` + (s.ok.length > 1 ? `<span class="count">${s.ok.length} photos</span>` : "");
+    });
+    document.querySelectorAll(`[data-count][data-view="${key}"]`).forEach(el => {
+      el.textContent = s.ok.length ? ` (${s.ok.length} ${s.ok.length === 1 ? "photo" : "photos"})` : "";
+    });
+  }));
+}
+
+/* =====================================================================
+   Rendering
+   ===================================================================== */
+$("skills-grid").innerHTML = SKILLS.map(([name, list]) => `
+  <div class="skill-group"><h3>${esc(name)}</h3>
+  <ul class="chips">${list.map(([t, hl]) => `<li class="${hl ? "hl" : ""}"><button type="button" class="chip-btn" aria-pressed="false" data-kw="${esc(t)}">${esc(t)}</button></li>`).join("")}</ul></div>`).join("");
+
+$("exp-list").innerHTML = EXPERIENCE.map(x => {
+  const s = x.sets[0];
+  const key = s ? makeSet(x.title, s.caption, s.images) : null;
+  return `<li class="tl-item">
+    <p class="tl-date">${esc(x.date)}</p>
+    <div class="tl-card ${key ? "" : "no-cover"}">
+      <div class="card-body">
+        <h3>${esc(x.title)}</h3>
+        <p class="org">${esc(x.org)}</p>
+        <p class="desc">${esc(x.desc)}</p>
+        ${x.bullets.length ? `<ul>${x.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+      </div>
+      ${key ? coverBtn(key) : ""}
+    </div>
+  </li>`;
+}).join("");
+
+$("projects-root").innerHTML = PROJECT_GROUPS.map(([group, items]) => `
+  <div class="proj-group">
+    <h3 class="sub">${esc(group)}</h3>
+    <div class="projects">${items.map(p => {
+      const keys = p.sets.map(s => makeSet(p.title + (p.sets.length > 1 ? `: ${s.label.replace("View ", "")}` : ""), s.caption, s.images));
+      return `<article class="card ${p.featured || items.length === 1 ? "featured" : ""}">
+        ${coverBtn(keys[0])}
+        <div class="card-body">
+          <h4>${esc(p.title)}</h4>
+          <p class="meta">${esc(p.meta)}</p>
+          <p class="desc">${esc(p.desc)}</p>
+          ${p.sets.length > 1 ? `<div class="set-btns">${p.sets.map((s, i) => `<button class="set-btn" type="button" data-view="${keys[i]}">${esc(s.label)}<span data-count data-view="${keys[i]}"></span></button>`).join("")}</div>` : ""}
+          <ul class="tags">${p.tags.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+        </div>
+      </article>`;
+    }).join("")}</div>
+  </div>`).join("");
+
+$("edu-grid").innerHTML = EDU_GROUPS.map(([g, items]) => `
+  <div class="edu-group"><h3>${esc(g)}</h3>
+  <ul>${items.map(([role, what, note]) => `<li><b>${esc(role)}</b>: ${esc(what)}${note ? `<span>${esc(note)}</span>` : ""}</li>`).join("")}</ul></div>`).join("");
+
+$("cert-grid").innerHTML = CERTS.map(c => {
+  const key = makeSet(c.title, c.caption, c.images);
+  return `<article class="card">
+    ${coverBtn(key, "contain")}
+    <div class="card-body">
+      <h4>${esc(c.title)}</h4>
+      ${c.meta ? `<p class="meta">${esc(c.meta)}</p>` : ""}
+      ${c.id ? `<p class="org">${esc(c.id)}</p>` : ""}
+    </div>
+  </article>`;
+}).join("");
+
+hydrate();
+
+/* =====================================================================
+   Photo viewer (windowed dialog)
+   ===================================================================== */
+const dlg = $("viewer");
+let cur = null, idx = 0, opener = null;
+
+function show(i) {
+  const list = cur.ok;
+  $("v-img").classList.remove("zoom");
+  if (!list.length) {
+    $("v-img").innerHTML = `<div class="ph"><span>Photos not added yet</span>${cur.images.map(p => `<code>${esc(p)}</code>`).join("")}</div>`;
+    $("v-count").textContent = ""; $("v-prev").hidden = $("v-next").hidden = true; $("v-thumbs").innerHTML = "";
+    return;
+  }
+  idx = (i + list.length) % list.length;
+  $("v-img").innerHTML = `<img src="${esc(list[idx])}" alt="${esc(cur.title)}, photo ${idx + 1}">`;
+  $("v-count").textContent = list.length > 1 ? `${idx + 1} / ${list.length}` : "";
+  $("v-prev").hidden = $("v-next").hidden = list.length < 2;
+  $("v-thumbs").innerHTML = list.length > 1 ? list.map((s, k) => `<button type="button" data-k="${k}" aria-label="Photo ${k + 1}" aria-current="${k === idx}"><img src="${esc(s)}" alt=""></button>`).join("") : "";
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-view]");
+  if (!b || b.hasAttribute("data-count")) return;
+  cur = sets[b.dataset.view]; opener = b;
+  $("v-title").textContent = cur.caption;
+  show(0);
+  if (!dlg.open) dlg.showModal();
+});
+$("v-prev").onclick = () => show(idx - 1);
+$("v-next").onclick = () => show(idx + 1);
+$("v-close").onclick = () => dlg.close();
+$("v-thumbs").addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (b) show(Number(b.dataset.k)); });
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener("close", () => { if (opener) opener.focus(); });
+dlg.addEventListener("keydown", e => {
+  if (!cur || cur.ok.length < 2) return;
+  if (e.key === "ArrowLeft") show(idx - 1);
+  if (e.key === "ArrowRight") show(idx + 1);
+});
+
+/* =====================================================================
+   Theme toggle
+   ===================================================================== */
+const root = document.documentElement;
+const effective = () => root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+function paintToggle() {
+  const next = effective() === "dark" ? "Light" : "Dark";
+  $("theme-label").textContent = next;
+  $("theme").setAttribute("aria-label", `Switch to ${next.toLowerCase()} theme`);
+}
+try { const saved = localStorage.getItem("theme"); if (saved) root.dataset.theme = saved; } catch (_) {}
+$("theme").onclick = () => {
+  const t = effective() === "dark" ? "light" : "dark";
+  root.dataset.theme = t;
+  try { localStorage.setItem("theme", t); } catch (_) {}
+  paintToggle();
+};
+paintToggle();
+
+/* =====================================================================
+   Interaction setup
+   ===================================================================== */
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+/* =====================================================================
+   Hero: a board whose pads are clickable. A pulse travels from the chip
+   to the pad, then the page jumps to the matching skill group.
+   ===================================================================== */
+(function board() {
+  const L = [["Power",175,60,0],["MCU",205,160,1],["PLC",255,300,3],["SCADA",285,400,3]];
+  const R = [["IoT",175,60,4],["PCB",205,160,2],["PSIM",255,300,2],["Modbus",285,400,3]];
+  const cx0 = 240, cx1 = 400;
+  let nodes = "", pins = "", d = 0;
+  const node = (name, t, path, cx, ly, anchor, lx) => `
+    <g class="node" tabindex="0" role="link" data-t="${t}" aria-label="${name}: jump to ${esc(SKILLS[t][0])}">
+      <path class="hit" d="${path}"/>
+      <path class="trace" pathLength="1" style="animation-delay:${(d++) * .15}s" d="${path}"/>
+      <circle class="pad" cx="${cx}" cy="${ly[0]}" r="10"/><circle class="hole" cx="${cx}" cy="${ly[0]}" r="4"/>
+      <text class="silk" ${anchor ? `text-anchor="${anchor}"` : ""} x="${lx}" y="${ly[1]}">${name}</text>
+    </g>`;
+  L.forEach(([name, y0, ty, t]) => {
+    const dx = Math.abs(ty - y0), x1 = cx0 - 40, x2 = x1 - dx;
+    nodes += node(name, t, `M${cx0} ${y0}H${x1}L${x2} ${ty}H44`, 40, [ty, ty + (ty < y0 ? -14 : 28)], "", 56);
+    pins += `<rect class="pin" x="${cx0 - 14}" y="${y0 - 5}" width="14" height="10" rx="1"/>`;
+  });
+  R.forEach(([name, y0, ty, t]) => {
+    const dx = Math.abs(ty - y0), x1 = cx1 + 40, x2 = x1 + dx;
+    nodes += node(name, t, `M${cx1} ${y0}H${x1}L${x2} ${ty}H596`, 600, [ty, ty + (ty < y0 ? -14 : 28)], "end", 584);
+    pins += `<rect class="pin" x="${cx1}" y="${y0 - 5}" width="14" height="10" rx="1"/>`;
+  });
+  $("board").innerHTML = `
+  <svg viewBox="0 0 640 460" focusable="false" aria-label="Circuit board diagram. Each pad links to a skill group.">
+    ${nodes}
+    <rect class="chip" x="${cx0}" y="130" width="160" height="200" rx="6"/>
+    ${pins}
+    <circle class="dot1" cx="${cx0 + 20}" cy="150" r="5"/>
+    <text class="silk-big" x="320" y="248" text-anchor="middle">V.T</text>
+    <text class="silk" x="320" y="276" text-anchor="middle">S1-EE 2026</text>
+    ${REDUCE ? "" : `<circle class="dot1" r="5"><animateMotion dur="4.5s" begin="2.2s" repeatCount="indefinite" path="M${cx0} 175H200L85 60H44"/></circle>`}
+  </svg>
+  <p class="board-hint">Click a pad to jump to related skills</p>`;
+
+  const svg = $("board").querySelector("svg");
+  function jump(t) {
+    const g = $("skills-grid").children[t];
+    g.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "center" });
+    g.classList.add("flash");
+    setTimeout(() => g.classList.remove("flash"), 1900);
+  }
+  function activate(nd) {
+    const t = Number(nd.dataset.t);
+    if (REDUCE) return jump(t);
+    const p = nd.querySelector(".trace"), len = p.getTotalLength();
+    const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    c.setAttribute("r", 8); c.setAttribute("class", "pulse");
+    svg.appendChild(c);
+    const t0 = performance.now(), dur = 650;
+    (function step(now) {
+      const k = Math.min((now - t0) / dur, 1), pt = p.getPointAtLength(len * k);
+      c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y);
+      if (k < 1) return requestAnimationFrame(step);
+      c.remove();
+      nd.classList.add("lit"); setTimeout(() => nd.classList.remove("lit"), 900);
+      jump(t);
+    })(t0);
+  }
+  svg.addEventListener("click", e => { const n = e.target.closest(".node"); if (n) activate(n); });
+  svg.addEventListener("keydown", e => {
+    const n = e.target.closest(".node");
+    if (n && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); activate(n); }
+  });
+
+  // Board follows the mouse: soft tilt plus a copper light under the cursor
+  if (FINE && !REDUCE) {
+    const box = $("board"), hero = document.querySelector(".hero");
+    hero.addEventListener("pointermove", e => {
+      const r = box.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      svg.style.transform = `perspective(900px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 12).toFixed(2)}deg)`;
+      box.style.setProperty("--bx", ((px + .5) * 100).toFixed(1) + "%");
+      box.style.setProperty("--by", ((py + .5) * 100).toFixed(1) + "%");
+    });
+    hero.addEventListener("pointerleave", () => { svg.style.transform = ""; });
+  }
+})();
+
+/* =====================================================================
+   Click a skill: highlight related experience and projects
+   ===================================================================== */
+(function skillFilter() {
+  const STOP = new Set(["and","via","the","for","with","system","systems","control","design","simulation","programming","electronics","electronic","motor","motors","professional","foreign","languages","internet","things","tools","tool","detail","schematic","integration","calibration","workflow","technical","public"]);
+  const targets = () => [...document.querySelectorAll("#exp-list .tl-card, #projects-root .card")];
+  const bar = $("filterbar");
+  let matches = [], pos = -1, activeBtn = null;
+
+  const tokens = txt => txt.toLowerCase().split(/[^a-z0-9+!]+/).filter(w => w.length >= 2 && !STOP.has(w));
+  const has = (text, tok) => new RegExp("(^|[^a-z0-9])" + tok.replace(/[.*+?^${}()|[\]\\!]/g, "\\$&") + "(?![a-z0-9])").test(text);
+
+  function clear() {
+    targets().forEach(t => t.classList.remove("dim", "match"));
+    if (activeBtn) { activeBtn.setAttribute("aria-pressed", "false"); activeBtn.parentElement.classList.remove("on"); }
+    activeBtn = null; matches = []; pos = -1; bar.hidden = true;
+  }
+  function apply(btn) {
+    clear();
+    activeBtn = btn;
+    btn.setAttribute("aria-pressed", "true"); btn.parentElement.classList.add("on");
+    const toks = tokens(btn.dataset.kw);
+    targets().forEach(t => {
+      const text = t.textContent.toLowerCase();
+      const ok = toks.some(k => has(text, k));
+      t.classList.toggle("match", ok); t.classList.toggle("dim", !ok);
+      if (ok) matches.push(t);
+    });
+    const n = matches.length;
+    $("fb-text").textContent = n ? `${btn.dataset.kw}: ${n} related ${n === 1 ? "item" : "items"}` : `No related items for ${btn.dataset.kw}`;
+    $("fb-next").hidden = !n;
+    if (!n) targets().forEach(t => t.classList.remove("dim"));
+    bar.hidden = false;
+  }
+  function next() {
+    if (!matches.length) return;
+    pos = (pos + 1) % matches.length;
+    const el = matches[pos];
+    el.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "center" });
+    if (!REDUCE) el.animate([{ transform: "scale(1)" }, { transform: "scale(1.012)" }, { transform: "scale(1)" }], { duration: 420 });
+  }
+  $("skills-grid").addEventListener("click", e => {
+    const b = e.target.closest(".chip-btn");
+    if (!b) return;
+    b === activeBtn ? clear() : apply(b);
+  });
+  $("fb-clear").onclick = clear;
+  $("fb-next").onclick = next;
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !dlg.open && !bar.hidden) clear(); });
+})();
+
+/* =====================================================================
+   Photo zoom inside the viewer: click to zoom, move the mouse to pan
+   ===================================================================== */
+$("v-img").addEventListener("click", e => {
+  if (e.target.closest("img")) $("v-img").classList.toggle("zoom");
+});
+$("v-img").addEventListener("pointermove", e => {
+  const img = $("v-img").querySelector("img");
+  if (!img || !$("v-img").classList.contains("zoom")) return;
+  const r = img.getBoundingClientRect();
+  img.style.transformOrigin = `${((e.clientX - r.left) / r.width * 100).toFixed(1)}% ${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`;
+});
+
+/* =====================================================================
+   Pointer effects: click ripple, cursor ring, card spotlight,
+   photo parallax, magnetic buttons
+   ===================================================================== */
+(function pointerFx() {
+  if (!REDUCE) {
+    document.addEventListener("pointerdown", e => {
+      if (e.button) return;
+      const r = document.createElement("span");
+      r.className = "ripple";
+      r.style.left = e.clientX + "px"; r.style.top = e.clientY + "px";
+      (dlg.open ? dlg : document.body).appendChild(r);
+      r.addEventListener("animationend", () => r.remove());
+    });
+  }
+  if (!FINE || REDUCE) return;
+
+  // Cursor ring (lives in the dialog while it is open so it stays visible)
+  const layer = document.createElement("div");
+  layer.className = "cursor-layer"; layer.setAttribute("aria-hidden", "true");
+  layer.innerHTML = '<div class="cursor-ring off"><i></i></div>';
+  document.body.appendChild(layer);
+  const ring = layer.firstChild, disc = ring.firstChild;
+  new MutationObserver(() => (dlg.open ? dlg : document.body).appendChild(layer))
+    .observe(dlg, { attributes: true, attributeFilter: ["open"] });
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  (function loop() {
+    rx += (mx - rx) * .22; ry += (my - ry) * .22;
+    ring.style.transform = `translate3d(${rx.toFixed(1)}px,${ry.toFixed(1)}px,0)`;
+    requestAnimationFrame(loop);
+  })();
+  document.documentElement.addEventListener("mouseleave", () => ring.classList.add("off"));
+
+  const SPOT = ".card, .tl-card, .skill-group, .edu-group, .edu";
+  const MAG = ".btn, .set-btn, .theme-toggle";
+  let lastSpot = null, lastCover = null, lastMag = null;
+  const reset = (el, ...vars) => el && vars.forEach(v => el.style.removeProperty(v));
+
+  document.addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    if (ring.classList.contains("off")) { rx = mx = e.clientX; ry = my = e.clientY; }
+    mx = e.clientX; my = e.clientY; ring.classList.remove("off");
+    const t = e.target;
+
+    let mode = "";
+    if (t.closest("#v-img img")) mode = $("v-img").classList.contains("zoom") ? "Back" : "Zoom";
+    else if (t.closest("[data-cover]")) mode = "View";
+    else if (t.closest("a, button, [role='link'], .chips li")) mode = "link";
+    disc.dataset.mode = mode;
+
+    const sp = t.closest(SPOT);
+    if (sp !== lastSpot) { reset(lastSpot, "--mx", "--my"); lastSpot = sp; }
+    if (sp) { const r = sp.getBoundingClientRect(); sp.style.setProperty("--mx", (e.clientX - r.left) + "px"); sp.style.setProperty("--my", (e.clientY - r.top) + "px"); }
+
+    const cv = t.closest(".cover");
+    if (cv !== lastCover) { reset(lastCover, "--tx", "--ty"); lastCover = cv; }
+    if (cv) { const r = cv.getBoundingClientRect(); cv.style.setProperty("--tx", (-((e.clientX - r.left) / r.width - .5) * 16).toFixed(1) + "px"); cv.style.setProperty("--ty", (-((e.clientY - r.top) / r.height - .5) * 12).toFixed(1) + "px"); }
+
+    const mg = t.closest(MAG);
+    if (mg !== lastMag) { if (lastMag) lastMag.style.transform = ""; lastMag = mg; }
+    if (mg) { const r = mg.getBoundingClientRect(); mg.style.transform = `translate(${((e.clientX - (r.left + r.width / 2)) * .22).toFixed(1)}px,${((e.clientY - (r.top + r.height / 2)) * .3).toFixed(1)}px)`; }
+  });
+  document.documentElement.addEventListener("mouseleave", () => {
+    reset(lastSpot, "--mx", "--my"); reset(lastCover, "--tx", "--ty");
+    if (lastMag) lastMag.style.transform = "";
+  });
+})();
