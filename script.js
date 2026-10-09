@@ -75,6 +75,12 @@ const PROJECT_GROUPS = [
       tags:["MPU9250","SD card logging","Google Sheets"],
       sets:[{ label:"View documentation", caption:"IoT tilt monitoring dashboard", images:["assets/proj-tilt-monitoring-1.jpg","assets/proj-tilt-monitoring-2.jpg","assets/proj-tilt-monitoring-3.png"] }] }
   ]],
+  ["Electrical Installation Design", [
+    { title:"Hospital Electrical Installation Design", meta:"Technical Drawing final project | Excel load calculation | Apr 2023 – Jun 2023",
+      desc:"Designed the lighting, air-conditioning, and power-outlet installation for the ground floor and first floor of a four-level hospital building, as part of a two-person team project. Calculated the number of luminaire points per room from required illuminance, lumen output, light loss factor (0.8), and coefficient of utilization (0.5), and sized air conditioners from room area using a BTU/h load method, then selected luminaire and AC models for each room across more than 100 rooms. Produced the installation drawings at 1:200 scale together with an Excel load-calculation workbook.",
+      tags:[\"Lighting design\",\"AC load calculation\",\"Electrical drawing\",\"Excel\"],
+      sets:[{ label:\"View documentation\", caption:\"Hospital electrical installation drawings (AC, lighting, outlets)\", images:[\"assets/proj-hospital-electrical-1.jpeg\",\"assets/proj-hospital-electrical-2.jpeg\",\"assets/proj-hospital-electrical-3.jpeg\"] }] }
+  ]],
   ["Software Automation", [
     { title:"Automated Receipt-Processing Telegram Bot", meta:"n8n | AI vision | Google Sheets | Apr 2026",
       desc:"Developed an automated personal expense-tracking system using a Telegram bot, n8n, AI vision, Google Drive, and Google Sheets. The system analyzes receipt images with AI to extract transaction details such as merchant, date, total amount, and category, then sends the results back to Telegram for user verification. Once confirmed, receipts are stored automatically in Google Drive with sequential numbering, while expense records are organized by date and month in Google Sheets.",
