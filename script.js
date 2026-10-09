@@ -72,10 +72,12 @@ const PROJECT_GROUPS = [
     { title:"PLC Learning Module: Pneumatics & Motor Control", meta:"Omron PLC | Nov 2024 – Dec 2024",
       desc:"Built a PLC learning module for hands-on student training, consisting of a pneumatic system module and a forward-reverse 3-phase motor control module. The components of each module were tested before integration, and the module is equipped with push buttons and an emergency stop button.",
       tags:["Omron PLC","Pneumatics","3-phase motor"],
+      link:"https://youtu.be/Vciiqnsr6KE",
       sets:[{ label:"View documentation", caption:"PLC learning module (Omron)", images:["assets/proj-plc-omron-1.jpeg","assets/proj-plc-omron-2.jpeg","assets/proj-plc-omron-3.jpeg"] }] },
     { title:"SCADA Learning Module", meta:"Modbus | Schneider VSD | May 2025 – Jun 2025",
       desc:"Built a SCADA learning module for hands-on training, verifying each component before integrating a sensor module (Renatta power meter via Modbus communication) and an actuator module (pilot lamps and a Schneider VSD). The module is equipped with push buttons and a system-wide emergency stop button.",
       tags:["Modbus","Schneider VSD","SCADA"],
+      link:"https://youtu.be/r5_0ShnXf90",
       sets:[{ label:"View documentation", caption:"SCADA learning module", images:["assets/proj-scada-module-1.jpeg","assets/proj-scada-module-2.jpeg","assets/proj-scada-module-3.jpeg"] }] }
   ]],
   ["IoT & Monitoring Systems", [
