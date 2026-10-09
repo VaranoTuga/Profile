@@ -53,7 +53,20 @@ const PROJECT_GROUPS = [
     { title:"Five-Level Single-Phase Buck-Boost Inverter", featured:true, meta:"Multi-cell H-bridge inverter | Jun 2026 – Sep 2026",
       desc:"Designed and built a five-level single-phase buck-boost inverter prototype using seven active power switches, with the topology and switching sequences simulated in PSIM and converted into a lookup table for real-time control. Control started on an Arduino Mega and was later migrated to an STM32F4 for faster processing and more flexible switching signal generation, producing a stable multilevel AC output.",
       tags:["Arduino Mega","STM32F4","PSIM"],
-      sets:[{ label:"View documentation", caption:"Multi-cell H-bridge inverter", images:["assets/proj-hbridge-inverter-1.jpeg","assets/proj-hbridge-inverter-2.jpg","assets/proj-hbridge-inverter-3.jpeg"] }] }
+      sets:[{ label:"View documentation", caption:"Multi-cell H-bridge inverter", images:["assets/proj-hbridge-inverter-1.jpeg","assets/proj-hbridge-inverter-2.jpg","assets/proj-hbridge-inverter-3.jpeg"] }] },
+    { title:"AC-AC Chopper", meta:"PWM voltage control | Arduino Uno",
+      desc:"Designed and built an AC-AC chopper that controls AC output voltage through PWM switching. Designed the schematic and PCB for both the power circuit and the PWM driver circuit, and wrote the PWM program on an Arduino Uno. Verified the output on an oscilloscope, which showed a stable 50 Hz sine wave (49.9955 Hz measured) driving a lamp load.",
+      tags:["AC-AC chopper","PWM","Arduino Uno","PCB design"],
+      link:"https://www.youtube.com/watch?v=RTapv4xi3MI",
+      sets:[{ label:"View documentation", caption:"AC-AC chopper prototype and output waveform", images:["assets/proj-ac-chopper-1.jpeg","assets/proj-ac-chopper-2.jpeg"] }] },
+    { title:"Three-Phase Inverter for Induction Motor", meta:"Three-phase inverter | Induction motor | Nov 2024 – Dec 2024",
+      desc:"Designed the schematic and PCB for a three-phase inverter power stage and its driver circuit, built to drive a three-phase induction motor. Tested the hardware on a lab bench with a DC supply, oscilloscope, and multimeter, and confirmed the hardware results against the simulation.",
+      tags:["3-phase inverter","Induction motor","PCB design","Simulation vs hardware"],
+      sets:[{ label:"View documentation", caption:"Three-phase inverter test setup", images:["assets/proj-inverter-3phase-1.jpeg"] }] },
+    { title:"Zeta Converter", meta:"DC-DC converter | Sep 2024 – Oct 2024",
+      desc:"Designed the schematic and PCB for a Zeta DC-DC converter and its PWM control board, then confirmed the hardware results against the simulation, including a lamp-load test.",
+      tags:["Zeta converter","DC-DC","PCB design","Simulation vs hardware"],
+      sets:[{ label:"View documentation", caption:"Zeta converter prototype and lamp-load test", images:["assets/proj-zeta-converter-1.jpeg","assets/proj-zeta-converter-2.jpeg","assets/proj-zeta-converter-3.jpeg"] }] }
   ]],
   ["Industrial Automation & Control", [
     { title:"PLC Learning Module: Pneumatics & Motor Control", meta:"Omron PLC | Nov 2024 – Dec 2024",
@@ -74,6 +87,12 @@ const PROJECT_GROUPS = [
       desc:"Developed an IoT-based structural tilt monitoring system to measure the tilt angle of the UNIKA Sporthall building, using two MPU9250 sensors placed at separate points (one on a level reference surface and one at the monitored point) to calculate the relative tilt angle in real time. Readings are logged to an SD card and synced to a Google Spreadsheet via a live dashboard.",
       tags:["MPU9250","SD card logging","Google Sheets"],
       sets:[{ label:"View documentation", caption:"IoT tilt monitoring dashboard", images:["assets/proj-tilt-monitoring-1.jpg","assets/proj-tilt-monitoring-2.jpg","assets/proj-tilt-monitoring-3.png"] }] }
+  ]],
+  ["Electrical Installation Design", [
+    { title:"Hospital Electrical Installation Design", meta:"Technical Drawing final project | Excel load calculation | Apr 2023 – Jun 2023",
+      desc:"Designed the lighting, air-conditioning, and power-outlet installation for the ground floor and first floor of a four-level hospital building, as part of a two-person team project. Calculated the number of luminaire points per room from required illuminance, lumen output, light loss factor (0.8), and coefficient of utilization (0.5), and sized air conditioners from room area using a BTU/h load method, then selected luminaire and AC models for each room across more than 100 rooms. Produced the installation drawings at 1:200 scale together with an Excel load-calculation workbook.",
+      tags:["Lighting design","AC load calculation","Electrical drawing","Excel"],
+      sets:[{ label:"View documentation", caption:"Hospital electrical installation drawings (AC, lighting, outlets)", images:["assets/proj-hospital-electrical-1.jpeg","assets/proj-hospital-electrical-2.jpeg","assets/proj-hospital-electrical-3.jpeg"] }] }
   ]],
   ["Software Automation", [
     { title:"Automated Receipt-Processing Telegram Bot", meta:"n8n | AI vision | Google Sheets | Apr 2026",
@@ -177,6 +196,7 @@ $("projects-root").innerHTML = PROJECT_GROUPS.map(([group, items]) => `
           <p class="meta">${esc(p.meta)}</p>
           <p class="desc">${esc(p.desc)}</p>
           ${p.sets.length > 1 ? `<div class="set-btns">${p.sets.map((s, i) => `<button class="set-btn" type="button" data-view="${keys[i]}">${esc(s.label)}<span data-count data-view="${keys[i]}"></span></button>`).join("")}</div>` : ""}
+          ${p.link ? `<div class="set-btns"><a class="set-btn" href="${esc(p.link)}" target="_blank" rel="noopener">Watch demo video</a></div>` : ""}
           <ul class="tags">${p.tags.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
         </div>
       </article>`;
