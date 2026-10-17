@@ -1,0 +1,5 @@
+     name = "profile"
+     compatibility_date = "2026-02-18"
+
+     [assets]
+     directory = "./"
