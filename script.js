@@ -623,6 +623,118 @@ const OK = new Set([
   "assets/proj-zeta-converter-2.jpeg",
   "assets/proj-zeta-converter-3.jpeg",
 ]);
+/* Skill links: each project / experience title -> the exact skill chips
+   (names from SKILLS above) it demonstrates. The skill filter uses this
+   list instead of guessing from the card text. */
+const LINKS = {
+  // Projects
+  "Interleaved Buck Converter for Generator Excitation": [
+    "DC and AC Converter",
+    "Interleaved Buck Converter",
+    "Sensor Integration",
+    "Public Speaking (conference presentation)",
+  ],
+  "Five-Level Single-Phase Buck-Boost Inverter": [
+    "DC and AC Converter",
+    "Inverter (Multilevel)",
+    "PSIM Simulation",
+    "Microcontrollers",
+    "Arduino / Arduino IDE",
+    "STM32F4",
+  ],
+  "AC-AC Chopper": [
+    "DC and AC Converter",
+    "Microcontrollers",
+    "Arduino / Arduino IDE",
+    "Schematic and PCB Design",
+    "Oscilloscopes & Multimeters",
+  ],
+  "Three-Phase Inverter for Induction Motor": [
+    "DC and AC Converter",
+    "Electric Motors",
+    "3-phase induction",
+    "Schematic and PCB Design",
+    "Oscilloscopes & Multimeters",
+  ],
+  "Zeta Converter": ["DC and AC Converter", "Schematic and PCB Design"],
+  "PLC Learning Module: Pneumatics & Motor Control": [
+    "PLC Programming",
+    "Omron PLC",
+    "Pneumatics",
+    "Electric Motors",
+    "3-phase induction",
+  ],
+  "SCADA Learning Module": [
+    "SCADA / HMI",
+    "Modbus",
+    "VSD (Schneider)",
+    "Motor Control via VSD",
+    "Sensor Integration",
+  ],
+  "Automatic Solar Panel Cleaning System": ["Internet of Things (IoT)"],
+  "IoT Structural Tilt Monitoring Dashboard": [
+    "Internet of Things (IoT)",
+    "Sensor Integration",
+    "Real-time Data Logging",
+    "Data Analysis (Dashboard)",
+    "Google Sheets / Google Drive",
+  ],
+  "Hospital Electrical Installation Design": [],
+  "Automated Receipt-Processing Telegram Bot": [
+    "n8n (Workflow Automation)",
+    "Telegram Bot",
+    "Google Sheets / Google Drive",
+  ],
+  // Experience
+  "Assistant to Consultant": ["Technical Documentation"],
+  "Basic Electronics Teacher": [
+    "Microcontrollers",
+    "Arduino / Arduino IDE",
+    "Sensor Integration",
+    "Internet of Things (IoT)",
+    "ESP8266 / NodeMCU",
+    "Robotics (line-following robots)",
+  ],
+  "Teaching Assistant: Electric Drives (Practicum)": [
+    "DC and AC Converter",
+    "Electric Motors",
+    "DC Motor",
+    "BLDC",
+    "3-phase induction",
+    "Motor Control via VSD",
+    "PSIM Simulation",
+    "Troubleshooting (wiring, parameters)",
+  ],
+  "Teaching Assistant: Fundamentals of Electrical Engineering (Practicum)": [
+    "Arduino / Arduino IDE",
+    "Sensor Integration",
+    "Electric Motors",
+    "DC Motor",
+    "Proteus 8 Professional",
+    "Schematic and PCB Design",
+    "TARGET 3001!",
+    "Oscilloscopes & Multimeters",
+    "Soldering",
+  ],
+  "Teaching Assistant: Microprocessors and Microcontrollers (Practicum)": [
+    "Microcontrollers",
+    "Arduino / Arduino IDE",
+    "AVR (Atmega8535)",
+    "C / C++ (CodeVisionAVR)",
+  ],
+  "Teaching Assistant: Fundamentals of Telecommunications (Practicum)": [
+    "Telecommunications",
+    "Filter Design (LPF/HPF/BPF/BSF)",
+    "Amplitude Modulation",
+  ],
+  "Operational Specialist Internship, Operation Facility Division": [
+    "SCADA / HMI",
+    "Telecommunications",
+  ],
+  "Teaching Assistant: Electrical Measurements and Circuits (Practicum)": [
+    "Oscilloscopes & Multimeters",
+  ],
+};
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (s) =>
@@ -690,7 +802,7 @@ $("pg").innerHTML = PROJECT_GROUPS.flatMap(([g, items]) =>
       ),
       w = !!p.featured;
     const tx = `<div><span class="tag">${esc(w ? "Featured · " + g : g)}</span><h4>${esc(p.title)}</h4><p class="mono date" style="margin-bottom:8px">${esc(p.meta)}</p>${dsc(p.desc)}<div class="btns">${p.sets.length > 1 ? p.sets.map((s, i) => (sets[ks[i]].ok.length ? `<button class="btn sm o ch" type="button" data-view="${ks[i]}">${esc(s.label)}</button>` : "")).join("") : ""}${p.link ? `<a class="btn sm ch" href="${esc(p.link)}" target="_blank" rel="noopener">Watch demo</a>` : ""}</div><ul class="tags">${p.tags.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`;
-    return `<article class="card ch rv ${w ? "wide" : ""}" data-g="${esc(g)}" data-t>${w ? `<div>${cover(ks[0])}</div>` : cover(ks[0])}${tx}</article>`;
+    return `<article class="card ch rv ${w ? "wide" : ""}" data-g="${esc(g)}" data-sk="${esc((LINKS[p.title] || []).join("|"))}" data-t>${w ? `<div>${cover(ks[0])}</div>` : cover(ks[0])}${tx}</article>`;
   }),
 ).join("");
 $("pf").onclick = (e) => {
@@ -715,7 +827,7 @@ $("exp").innerHTML = EXPERIENCE.map((x) => {
   const s = x.sets[0],
     k = s ? mk(x.title, s.caption, s.images) : null,
     c = k ? cover(k) : "";
-  return `<div class="tli rv" data-g="${esc(kind(x))}"><article class="card ch ${c ? "" : "nc"}" data-t><div><p class="mono date">${esc(x.date)}</p><h3>${esc(x.title)}</h3><p class="org">${esc(x.org)}</p><p>${esc(x.desc)}</p>${x.bullets.length ? `<ul class="bl">${x.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}</div>${c}</article></div>`;
+  return `<div class="tli rv" data-g="${esc(kind(x))}"><article class="card ch ${c ? "" : "nc"}" data-sk="${esc((LINKS[x.title] || []).join("|"))}" data-t><div><p class="mono date">${esc(x.date)}</p><h3>${esc(x.title)}</h3><p class="org">${esc(x.org)}</p><p>${esc(x.desc)}</p>${x.bullets.length ? `<ul class="bl">${x.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}</div>${c}</article></div>`;
 }).join("");
 $("ef").onclick = (e) => {
   const b = e.target.closest(".f");
@@ -755,11 +867,6 @@ document.addEventListener("click", (e) => {
 
 /* skill filter */
 (() => {
-  const STOP = new Set(
-    "and via the for with system systems control design simulation programming electronics motor motors professional internet things tools detail schematic integration technical public".split(
-      " ",
-    ),
-  );
   let ms = [],
     pos = -1,
     act = null;
@@ -790,21 +897,10 @@ document.addEventListener("click", (e) => {
     clear();
     act = b;
     b.setAttribute("aria-pressed", "true");
-    const tk = b.dataset.kw
-      .toLowerCase()
-      .split(/[^a-z0-9+!]+/)
-      .filter((w) => w.length > 1 && !STOP.has(w));
     $$("#pf .f")[0].click();
     $$("#ef .f")[0].click();
     tg().forEach((t) => {
-      const tx = t.textContent.toLowerCase(),
-        ok = tk.some((k) =>
-          new RegExp(
-            "(^|[^a-z0-9])" +
-              k.replace(/[.*+?^${}()|[\]\\!]/g, "\\$&") +
-              "(?![a-z0-9])",
-          ).test(tx),
-        );
+      const ok = (t.dataset.sk || "").split("|").includes(b.dataset.kw);
       t.classList.toggle("hit", ok);
       t.classList.toggle("dim", !ok);
       if (ok) ms.push(t);
